@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registry-cache
+  labels:
+    app: registry-cache
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+        app: registry-cache
+  template:
+    metadata:
+      labels:
+        app: registry-cache
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: registry
+        image: "{{ .Values.image }}:{{ .Values.imageVersion }}"
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: REGISTRY_HTTP_ADDR
+          value: ":4000"
+        - name: REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY
+          value: "/var/lib/registry"
+        - name: REGISTRY_PROXY_REMOTEURL
+          value: "https://registry-1.docker.io"
+        - name: REGISTRY_STORAGE_DELETE_ENABLED
+          value: "true"
+        volumeMounts:
+        - name: image-store
+          mountPath: /var/lib/registry
+        ports:
+        - containerPort: 4000
+          name: registry
+          protocol: TCP
+      volumes:
+      - name: image-store
+        emptyDir: {}
