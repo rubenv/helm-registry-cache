@@ -1,3 +1,11 @@
 apiVersion: v1
-entries: {}
-generated: "2022-05-25T19:14:46.045332835+02:00"
+entries:
+  registry-cache:
+  - apiVersion: v1
+    created: "2022-05-25T17:15:47.539106531Z"
+    digest: 6dd7474d2b02f816ddfff54949b1507f4d8baa8d7e1a38b944d697b7a949fca5
+    name: registry-cache
+    urls:
+    - https://github.com/rubenv/helm-registry-cache/releases/download/registry-cache-0.1.2/registry-cache-0.1.2.tgz
+    version: 0.1.2
+generated: "2022-05-25T17:15:47.539116132Z"
